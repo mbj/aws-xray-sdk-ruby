@@ -24,7 +24,7 @@ module XRay
     def send_entity(entity:)
       return nil unless entity.sampled
       begin
-        payload = %(#{@@protocol_header}#{@@protocol_delimiter}#{entity.to_json})
+        payload = %(#{@@protocol_header}#{@@protocol_delimiter}#{JSON.dump(entity)})
         logger.debug %(sending payload #{payload} to daemon at #{@address}.)
         @socket.send payload, 0
       rescue StandardError => e

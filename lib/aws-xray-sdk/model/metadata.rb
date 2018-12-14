@@ -1,4 +1,3 @@
-require 'multi_json'
 require 'aws-xray-sdk/exceptions'
 
 module XRay
@@ -46,10 +45,8 @@ module XRay
       @data
     end
 
-    def to_json
-      @to_json ||= begin
-        MultiJson.dump to_h
-      end
+    def to_json(*args)
+      @to_json ||= to_h.to_json(*args)
     end
   end
 

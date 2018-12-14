@@ -1,4 +1,3 @@
-require 'multi_json'
 require 'aws-xray-sdk/logger'
 
 module XRay

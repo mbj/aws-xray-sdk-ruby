@@ -17,8 +17,7 @@ class TestSubsegment < Minitest::Test
     segment = XRay::Segment.new name: name
     subsegment = XRay::Subsegment.new name: name, segment: segment
     segment.add_subsegment subsegment: subsegment
-    json = segment.to_json
-    h = JSON.load(json)
+    h = JSON.load(JSON.dump(segment))
     refute_nil h['subsegments']
     refute h['subsegments'].empty?
 

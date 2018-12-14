@@ -46,7 +46,7 @@ module XRay
       # no-op
     end
 
-    def to_json
+    def to_json(*args)
       # no-op
     end
   end

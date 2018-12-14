@@ -1,5 +1,3 @@
-require 'multi_json'
-
 module XRay
   # Represents cause section in segment and subsegment document.
   # It records information about application runtime exceptions.
@@ -24,10 +22,8 @@ module XRay
       h
     end
 
-    def to_json
-      @to_json ||= begin
-        MultiJson.dump to_h
-      end
+    def to_json(*args)
+      @to_json ||= to_h.to_json(*args)
     end
 
     private

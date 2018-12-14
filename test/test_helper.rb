@@ -5,12 +5,6 @@ require 'minitest/autorun'
 require 'aws-xray-sdk/emitter/emitter'
 require 'aws-xray-sdk/sampling/default_sampler'
 
-if RUBY_PLATFORM == 'java'
-  require 'jrjackson'
-else
-  require 'oj'
-end
-
 module XRay
   # holds all testing needed classes and methods
   module TestHelper

@@ -1,6 +1,5 @@
 require 'securerandom'
 require 'bigdecimal'
-require 'multi_json'
 require 'aws-xray-sdk/exceptions'
 require 'aws-xray-sdk/model/cause'
 require 'aws-xray-sdk/model/annotations'
@@ -166,10 +165,8 @@ module XRay
       h
     end
 
-    def to_json
-      @to_json ||= begin
-        MultiJson.dump(to_h)
-      end
+    def to_json(*args)
+      @to_json ||= to_h.to_json(*args)
     end
 
     private

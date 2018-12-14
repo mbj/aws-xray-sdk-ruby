@@ -22,7 +22,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'aws-sdk-xray', '~> 1.4.0'
-  spec.add_dependency 'multi_json', '~> 1'
 
   spec.add_development_dependency 'aws-sdk-dynamodb', '~> 1'
   spec.add_development_dependency 'aws-sdk-s3', '~> 1'

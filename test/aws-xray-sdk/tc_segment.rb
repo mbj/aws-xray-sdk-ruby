@@ -17,7 +17,7 @@ class TestSegment < Minitest::Test
   def test_minimal_json
     segment = XRay::Segment.new name: name
     segment.close
-    json = segment.to_json
+    json = JSON.dump(segment)
     h = JSON.load(json)
     refute_nil h['trace_id']
     refute_nil h['id']
@@ -92,7 +92,7 @@ class TestSegment < Minitest::Test
       k4: 0 / 0.0, # NaN
     }
     segment.annotations.update annotations
-    h = JSON.load(segment.to_json)
+    h = JSON.load(JSON.dump(segment))
     at_h = h['annotations']
     assert_equal 'Infinity', at_h['k3']
     assert_equal 'NaN', at_h['k4']
