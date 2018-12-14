@@ -18,18 +18,18 @@ class TestSubsegment < Minitest::Test
     subsegment = XRay::Subsegment.new name: name, segment: segment
     segment.add_subsegment subsegment: subsegment
     json = segment.to_json
-    h = eval(json)
-    refute_nil h[:subsegments]
-    refute h[:subsegments].empty?
+    h = JSON.load(json)
+    refute_nil h['subsegments']
+    refute h['subsegments'].empty?
 
-    sub_h = h[:subsegments][0]
-    assert_equal 'subsegment', sub_h[:type]
-    assert_equal segment.id, sub_h[:parent_id]
-    assert_equal segment.trace_id, sub_h[:trace_id]
-    assert sub_h[:in_progress]
-    refute_nil sub_h[:start_time]
-    refute sub_h.key?(:sql)
-    refute sub_h.key?(:end_time)
+    sub_h = h['subsegments'][0]
+    assert_equal 'subsegment', sub_h['type']
+    assert_equal segment.id, sub_h['parent_id']
+    assert_equal segment.trace_id, sub_h['trace_id']
+    assert sub_h['in_progress']
+    refute_nil sub_h['start_time']
+    refute sub_h.key?('sql')
+    refute sub_h.key?('end_time')
   end
 
   def test_nested_subsegments

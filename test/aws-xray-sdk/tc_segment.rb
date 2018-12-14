@@ -18,23 +18,23 @@ class TestSegment < Minitest::Test
     segment = XRay::Segment.new name: name
     segment.close
     json = segment.to_json
-    h = eval(json)
-    refute_nil h[:trace_id]
-    refute_nil h[:id]
-    refute_nil h[:start_time]
-    refute_nil h[:end_time]
-    refute h.key?(:error)
-    refute h.key?(:throttle)
-    refute h.key?(:fault)
-    refute h.key?(:cause)
-    refute h.key?(:metadata)
-    refute h.key?(:annotations)
-    refute h.key?(:user)
-    refute h.key?(:parent_id)
-    refute h.key?(:in_progress)
-    refute h.key?(:subsegments)
-    refute h.key?(:http)
-    refute h.key?(:aws)
+    h = JSON.load(json)
+    refute_nil h['trace_id']
+    refute_nil h['id']
+    refute_nil h['start_time']
+    refute_nil h['end_time']
+    refute h.key?('error')
+    refute h.key?('throttle')
+    refute h.key?('fault')
+    refute h.key?('cause')
+    refute h.key?('metadata')
+    refute h.key?('annotations')
+    refute h.key?('user')
+    refute h.key?('parent_id')
+    refute h.key?('in_progress')
+    refute h.key?('subsegments')
+    refute h.key?('http')
+    refute h.key?('aws')
   end
 
   def test_apply_status_code
@@ -92,10 +92,10 @@ class TestSegment < Minitest::Test
       k4: 0 / 0.0, # NaN
     }
     segment.annotations.update annotations
-    h = eval(segment.to_json)
-    at_h = h[:annotations]
-    assert_equal 'Infinity', at_h[:k3]
-    assert_equal 'NaN', at_h[:k4]
+    h = JSON.load(segment.to_json)
+    at_h = h['annotations']
+    assert_equal 'Infinity', at_h['k3']
+    assert_equal 'NaN', at_h['k4']
   end
 
   def test_sampling_rule_name
