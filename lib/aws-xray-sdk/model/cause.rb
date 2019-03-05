@@ -50,7 +50,8 @@ module XRay
 
       backtrace = e.backtrace_locations
       return h unless backtrace
-      h[:stack] = backtrace.first(@@depth).collect do |t|
+
+      h[:stack] = backtrace.map do |t|
         {
           path:  t.path,
           line:  t.lineno,
@@ -58,8 +59,6 @@ module XRay
         }
       end
 
-      truncated = backtrace.size - @@depth
-      h[:truncated] = truncated if truncated > 0
       h
     end
   end
