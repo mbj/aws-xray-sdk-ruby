@@ -7,7 +7,7 @@ class TestFacetRack < Minitest::Test
   ENV_WITH_QUERY_STRING = {
     "GATEWAY_INTERFACE" => "CGI/1.1",
     "PATH_INFO" => "/index.html",
-    "QUERY_STRING" => "",
+    "QUERY_STRING" => "foo=bar",
     "REMOTE_ADDR" => "::1",
     "REMOTE_HOST" => "localhost",
     "REQUEST_METHOD" => "GET",
@@ -57,11 +57,11 @@ class TestFacetRack < Minitest::Test
     @@recorder.emitter.clear
   end
 
-  def test_rack_http_url_excludes_query_string
+  def test_rack_http_url_allows_query_string
     middleware = XRay::Rack::Middleware.new(@@app, :recorder => @@recorder)
     middleware.call ENV_WITH_QUERY_STRING
     segment = @@recorder.emitter.entities[0]
-    assert_equal "http://localhost:3000/index.html", segment.http_request[:url]
+    assert_equal "http://localhost:3000/index.html?foo=bar", segment.http_request[:url]
   end
 
   def test_rack_returns_xray_header
